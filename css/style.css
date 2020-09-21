@@ -1,0 +1,95 @@
+/* style.css */
+
+.body {
+	background-color: #34495e;
+	margin: auto;
+}
+
+.parent {
+	display: flex;
+	margin: auto;
+	width: 100%;
+}
+
+.childleft {
+	margin-left: auto;
+	width: 100%;
+}
+.childcenter {
+	margin-right: 50px;
+	margin-left: 50px;
+	width: 100%;
+}
+.childright {
+	margin-right: auto;
+	width: 100%;
+}
+
+.button {
+	background-color: #2ecc71;
+	border-radius: 10px;
+	border: 1px solid #27ae60;
+	display: inline-block;
+	cursor: pointer;
+	color: #212121;
+	font-family: Arial;
+	font-size: 17px;
+	padding: 16px 31px;
+	text-decoration: none;
+	margin-left: 25px;
+}
+
+.button:hover {
+	background-color: #27ae60;
+}
+
+.button:active {
+	position: relative;
+	top: 1px;
+}
+
+.spacer {
+	height: 40px;
+}
+
+.knob {
+	margin-top: auto;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.textstyle {
+	font-family: Arial;
+	font-size: 17px;
+	color: #95a5a6;
+	margin-left: 25px;
+}
+
+.display {
+	background-color: #bdc3c7;
+	border-radius: 10px;
+	border: 4px solid #212121;
+	display: inline-block;
+	cursor: pointer;
+	color: #212121;
+	font-family: Arial;
+	font-size: 17px;
+	padding: 16px 31px;
+	text-decoration: none;
+	margin-left: 25px;
+	margin-right: 25px;
+}
+
+.container {
+	text-align: center;
+	float: left;
+}
+
+.textblock {
+	display: inline-block;
+	text-align: center;
+}
+
+.textblock.display {
+	display: block;
+}
