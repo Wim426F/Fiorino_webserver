@@ -11,12 +11,18 @@
 
 <body class="body">
     <div class="parent">
+        <p class="textstyle">
+			Update Firmware via WiFi:
+		</p>
+    </div>
+
+    <div class="parent">
         <form method = "POST" action = "/upload_file" enctype="multipart/form-data">
             <input class="button" type="file" name="data"/>
             <input class="button" type="submit" name="upload" value="Upload" title = "Upload File" onclick="window.location.href = '/'">
         </form>	
     </div>
-    <div>
+    <div class="parent">
         <div class="spacer"></div>
         <span class="button" id="return" onclick="window.location.href = '/'">Return</span>
     </div>

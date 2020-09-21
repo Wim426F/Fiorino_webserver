@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CSS Horizontal Alignment</title>
+    <style>
+        .screen {
+            padding: 10px;
+            width: 70%;
+            margin: 0 auto;
+            background-color: #f06d06;
+            text-align: center;
+            color: white;
+            border-radius: 0 0 50px 50px;
+            border: 4px solid #000;
+        }
+
+        .seats span,
+        .backSeats div {
+            margin: 10px;
+            padding: 10px;
+            color: white;
+            border: 4px solid #000;
+        }
+
+        .seats span {
+            width: 120px;
+            display: inline-block;
+            background-color: #48C9B0;
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .seats {
+            text-align: center;
+        }
+
+        .backSeats div {
+            background-color: #dc3545;
+        }
+
+        .leftFloat {
+            float: left;
+        }
+
+        .rightAbsolute {
+            position: absolute;
+            right: 150px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="screen">Screen</div>
+    <div class="seats">
+        <span class="left">Adam</span>
+        <span class="center">Martha</span>
+        <span class="right">Samantha</span>
+        <div class="backSeats">
+            <div class="leftFloat">Premium 1</div>
+            <div class="leftFloat">Premium 2</div>
+            <div class="rightAbsolute">Premium 3</div>
+        </div>
+    </div>
+</body>
+
+</html>

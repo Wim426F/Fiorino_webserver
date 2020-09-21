@@ -117,17 +117,16 @@
 		<div class="spacer"></div>
 	</div>
 
-	<div>
 	<div class="parent">
-		<div class="childleft">
+		<div class="knob">
 			<p class="textstyle">Vmin</p>
 			<span class="display" id="Vmin">0.00</span>
 		</div>
-		<div class="childcenter">
+		<div class="knob">
 			<p class="textstyle">Vavg</p>
 			<span class="display" id="Vavg">0.00</span>
 		</div>
-		<div class="childright">
+		<div class="knob">
 			<p class="textstyle">Vmax</p>
 			<span class="display" id="Vmax">0.00</span>
 		</div>
@@ -135,16 +134,20 @@
 
 	<div class="spacer"></div>
 
-	<p class="textstyle">
-		Manage Configuration
-	</p>
+	<div class="parent">
+		<p class="textstyle">
+			Controller Configuration
+		</p>
 
-	<div>
-		<span class="button" id="parameters" onclick="window.location.href = '/parameters'">Parameters</span>
-		<span class="button" id="upload" onclick="window.location.href = '/update'">Upload</span>
-		<span class="button" id="datalog" onclick="window.location.href = '/datalog'">Datalog</span>
+		<div>
+			<span class="button" id="parameters"
+				onclick="window.location.href = '/parameters.html'">Parameters</span>
+			<span class="button" id="upload"
+				onclick="window.location.href = '/update.html'">Upload</span>
+			<span class="button" id="datalog"
+				onclick="window.location.href = '/datalog.html'">Datalog</span>
+		</div>
 	</div>
-
 </body>
 
 </html>
