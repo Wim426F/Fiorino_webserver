@@ -11,7 +11,6 @@
 	<script>
 
 		var soc;
-
 		function gauges() {
 			// Create knob element, 300 x 300 px in size.
 			const socGauge = pureknob.createKnob(300, 300);
@@ -99,13 +98,20 @@
 			const speedElem = document.getElementById('speedElement');
 			speedElem.appendChild(speedNode);
 		}
-
 		function ready() {
 			gauges();
 
 		}
-
 		document.addEventListener('DOMContentLoaded', ready, false);
+
+		var ws = new WebSocket("ws://192.168.4.22/ws");
+		ws.onopen = function () {
+		};
+		ws.onmessage = function(getVmin) {
+			document.getElementById("Vmin").innerHTML  = getVmin.data;
+			console.log(getVmin.data);
+			console.log("message received");
+        };
 	</script>
 </head>
 
@@ -120,15 +126,15 @@
 	<div class="parent">
 		<div class="knob">
 			<p class="textstyle">Vmin</p>
-			<span class="display" id="Vmin">0.00</span>
+			<span class="display" id="Vmin">--</span>
 		</div>
 		<div class="knob">
 			<p class="textstyle">Vavg</p>
-			<span class="display" id="Vavg">0.00</span>
+			<span class="display" id="Vavg"></span>
 		</div>
 		<div class="knob">
 			<p class="textstyle">Vmax</p>
-			<span class="display" id="Vmax">0.00</span>
+			<span class="display" id="Vmax"></span>
 		</div>
 	</div>
 
@@ -140,12 +146,9 @@
 		</p>
 
 		<div>
-			<span class="button" id="parameters"
-				onclick="window.location.href = '/parameters.html'">Parameters</span>
-			<span class="button" id="upload"
-				onclick="window.location.href = '/update.html'">Upload</span>
-			<span class="button" id="datalog"
-				onclick="window.location.href = '/datalog.html'">Datalog</span>
+			<span class="button" id="parameters" onclick="window.location.href = '/parameters'">Parameters</span>
+			<span class="button" id="upload" onclick="window.location.href = '/update'">Upload</span>
+			<span class="button" id="datalog" onclick="window.location.href = '/datalog'">Datalog</span>
 		</div>
 	</div>
 </body>
