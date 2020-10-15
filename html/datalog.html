@@ -5,14 +5,39 @@
     <title>
         Datalog
     </title>
-    <meta charset="UTF-8"> 
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css" type="text/css">
+    <script>
+        function editlog(element) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/datalog?function=" + element.id, true);
+            xhr.send();
+            if (element.id == 'delete') {
+                location.reload();
+            }
+        }
+    </script>
 </head>
 
 <body class="body">
     <div class="parent">
-        <div class="spacer"></div>
-        <span class="button" id="return" onclick="window.location.href = '/'">Return</span>
+        <div class="textblock">
+            <object class="logstyle" data="logfile" type="text/plain"></object>
+        </div>
+    </div>
+    <div class="parent">
+        <p class="textstyle">
+            Manage Datalogging
+        </p>
+        %BUTTONPLACEHOLDER%
+        <div>
+            <span class="button" id="delete" onclick="editlog(this)">Delete Logfile</span>
+            <span class="button" id="download" onclick="editlog(this)">Download Logfile</span>
+        </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="parent">
+        <span class="button" id="return" onclick="window.location.href = '/'">Return to Home</span>
     </div>
 </body>
 

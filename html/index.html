@@ -9,7 +9,6 @@
 	<link rel="stylesheet" href="style.css" type="text/css">
 	<script src="pureknob.js" type="text/javascript"></script>
 	<script>
-
 		var soc;
 		function gauges() {
 			// Create knob element, 300 x 300 px in size.
@@ -100,18 +99,33 @@
 		}
 		function ready() {
 			gauges();
-
 		}
 		document.addEventListener('DOMContentLoaded', ready, false);
-
 		var ws = new WebSocket("ws://192.168.4.22/ws");
 		ws.onopen = function () {
 		};
-		ws.onmessage = function(getVmin) {
-			document.getElementById("Vmin").innerHTML  = getVmin.data;
+		ws.onmessage = function (getVmin) {
+			document.getElementById("Vmin").innerHTML = getVmin.data;
 			console.log(getVmin.data);
 			console.log("message received");
-        };
+		};
+
+		setInterval(function () {
+			// Call a function repetatively with 2 Second interval
+			getData();
+		}, 2000);
+		function getData() {
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					document.getElementById("ADCValue").innerHTML =
+						this.responseText;
+				}
+			};
+			xhttp.open("GET", "readADC", true);
+			xhttp.send();
+		}
+
 	</script>
 </head>
 
@@ -142,15 +156,54 @@
 
 	<div class="parent">
 		<p class="textstyle">
+			Functions
+		</p>
+		<div>
+
+		</div>
+	</div>
+
+	<div class="parent">
+		<p class="textstyle">
 			Controller Configuration
 		</p>
-
 		<div>
 			<span class="button" id="parameters" onclick="window.location.href = '/parameters'">Parameters</span>
 			<span class="button" id="upload" onclick="window.location.href = '/update'">Upload</span>
 			<span class="button" id="datalog" onclick="window.location.href = '/datalog'">Datalog</span>
 		</div>
 	</div>
+
+	<script>
+		function toggleCheckbox(element) {
+			var xhr = new XMLHttpRequest();
+			if (element.checked) { xhr.open("GET", "/update?state=1", true); }
+			else { xhr.open("GET", "/update?state=0", true); }
+			xhr.send();
+		}
+
+		setInterval(function () {
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					var inputChecked;
+					var outputStateM;
+					if (this.responseText == 1) {
+						inputChecked = true;
+						outputStateM = "On";
+					}
+					else {
+						inputChecked = false;
+						outputStateM = "Off";
+					}
+					document.getElementById("output").checked = inputChecked;
+					document.getElementById("outputState").innerHTML = outputStateM;
+				}
+			};
+			xhttp.open("GET", "/state", true);
+			xhttp.send();
+		}, 1000);
+	</script>
 </body>
 
 </html>

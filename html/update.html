@@ -31,14 +31,17 @@
     </div>
     <div class="parent">
         <form method="POST" action="/update/#1" enctype="multipart/form-data">
-            <input class="button" type="file" name="data" />
+            <label for="file-upload" class="display">
+                Browse file...
+            </label>
+            <input id="file-upload" type="file"/>
             <input class="button" type="submit" name="upload" value="Upload" title="Upload File">
         </form>
     </div>
 
     <div class="parent">
         <div class="spacer"></div>
-        <span class="button" id="return" onclick="window.location.href = '/'">Return</span>
+        <span class="button" id="return" onclick="window.location.href = '/'">Return to Home</span>
     </div>
 </body>
 
