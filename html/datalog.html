@@ -21,8 +21,9 @@
 
 <body class="body">
     <div class="parent">
-        <div class="textblock">
-            <object class="logstyle" data="logfile" type="text/plain"></object>
+        <div>
+            <!--<object class="logstyle" data="logfile" type="text/plain"></object>-->
+            <textarea id="logfile" class="textblock" data="logfile" name="Logfile"></textarea>
         </div>
     </div>
     <div class="parent">
@@ -32,7 +33,32 @@
         %BUTTONPLACEHOLDER%
         <div>
             <span class="button" id="delete" onclick="editlog(this)">Delete Logfile</span>
-            <span class="button" id="download" onclick="editlog(this)">Download Logfile</span>
+            <!--<span class="button" id="download">Download Logfile</span>-->
+            <input class="button" type="button" id="download" value="Download" />
+            <script>
+                function download(filename, text) {
+                    var element = document.createElement('a');
+                    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+                    element.setAttribute('download', filename);
+
+                    element.style.display = 'none';
+                    document.body.appendChild(element);
+
+                    element.click();
+
+                    document.body.removeChild(element);
+                }
+
+                // Start file download.
+                document.getElementById("download").addEventListener("click", function () {
+                    // Generate download of hello.txt file with some content
+                    var text = document.getElementById("logfile").value;
+                    var filename = "logfile.txt";
+
+                    download(filename, text);
+                }, false);
+
+            </script>
         </div>
     </div>
     <div class="spacer"></div>
