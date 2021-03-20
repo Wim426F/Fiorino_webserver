@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Serial port
+    </title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <script>
+
+    </script>
+</head>
+
+<body class="body">
+    <div class="parent">
+        <form action="/serialinput">
+            <label class="textstyle" for="input">Send Command</label>
+            <textarea class="display" style="background-color: #FFFFFF;" id="input" name="input" rows="1" cols="50">
+              </textarea>
+            <input class="button" type="send" value="send">
+        </form>
+    </div>
+
+    <div class="parent">
+        <textarea id="port" class="textblock" data="" name="Serial port"></textarea>
+    </div>
+
+    <hr class="line">
+
+    <div class="parent">
+        <span class="button" id="return" onclick="window.location.href = '/'">Return to Home</span>
+    </div>
+</body>
+
+</html>

@@ -5,15 +5,29 @@
 	<title>
 		Fiorino
 	</title>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="style.css" type="text/css">
 	<script src="pureknob.js" type="text/javascript"></script>
 	<script>
-		var soc;
+		var batteryCapacity;
+		var batteryPercentage;
+		var batteryVoltage;
+		var batteryCurrent;
+		var batteryTemperature;
+
+		var cellVoltageMin;
+		var cellVoltageMax;
+
+		var balancedCapacity;
+		var balancingPower;
+
+		var chargerPwm;
+		var chargerPower;
+
 		function gauges() {
 			// Create knob element, 300 x 300 px in size.
-			const socGauge = pureknob.createKnob(300, 300);
-			const speedGauge = pureknob.createKnob(300, 300);
+			socGauge = pureknob.createKnob(260, 260);
+			speedGauge = pureknob.createKnob(260, 260);
 
 			// Set properties.
 			socGauge.setProperty('angleStart', -0.75 * Math.PI);
@@ -26,26 +40,12 @@
 			socGauge.setProperty('valMax', 100);
 			socGauge.setProperty('textScale', '0.8');
 			socGauge.setProperty('label', 'SOC');
-			//socGauge.setProperty('readonly', 'true');
+			socGauge.setProperty('readonly', 'true');
 			socGauge.setProperty('fnValueToString', function (value) {
 				let string = value.toString();
-				let n = string.length;
-
-				/*
-				 * If value is just a single digit, add leading zero.
-				 */
-				if (n < 2) {
-					string = '0' + string;
-					n += 1;
-				}
-
-				const prefix = string.slice(0, n - 1);
-				const suffix = string.slice(n - 1, n);
-				const result = prefix + suffix + ' %';
+				result = string + ' %';
 				return result;
 			});
-
-			socGauge.setValue(84);
 
 			speedGauge.setProperty('angleStart', -0.75 * Math.PI);
 			speedGauge.setProperty('angleEnd', 0.75 * Math.PI);
@@ -54,83 +54,140 @@
 			speedGauge.setProperty('colorLabel', '#e67e22');
 			speedGauge.setProperty('trackWidth', 0.3);
 			speedGauge.setProperty('valMin', 0);
-			speedGauge.setProperty('valMax', 90);
+			speedGauge.setProperty('valMax', 10);
 			speedGauge.setProperty('textScale', '0.72');
 			speedGauge.setProperty('label', 'Power');
 			speedGauge.setProperty('needle', "true");
+			speedGauge.setProperty('readonly', 'true');
 			speedGauge.setProperty('fnValueToString', function (value) {
 				let string = value.toString();
-				let n = string.length;
-
-				/*
-				 * If value is just a single digit, add leading zero.
-				 */
-				if (n < 2) {
-					string = '0' + string;
-					n += 1;
-				}
-
-				const prefix = string.slice(0, n - 1);
-				const suffix = string.slice(n - 1, n);
-				const result = prefix + '.' + suffix + ' kW';
+				result = string + ' kW';
 				return result;
 			});
 
-			const socListener = function (socGauge, value) {
-				console.log(value);
-			};
-			const speedListener = function (speedGauge, value) {
-				console.log(value);
-			};
-
-			socGauge.addListener(socListener);
-			speedGauge.addListener(speedListener);
+			socGauge.setValue(0);
+			speedGauge.setValue(0);
 
 			// Create element node.
-			const socNode = socGauge.node();
-			const speedNode = speedGauge.node();
+			socNode = socGauge.node();
+			speedNode = speedGauge.node();
 
 			// Add it to the DOM.
-			const socElem = document.getElementById('socElement');
+			socElem = document.getElementById('socElement');
 			socElem.appendChild(socNode);
 
-			const speedElem = document.getElementById('speedElement');
+			speedElem = document.getElementById('speedElement');
 			speedElem.appendChild(speedNode);
+
+			socGauge.setValue(0);
+			speedGauge.setValue(0);
 		}
+
 		function ready() {
 			gauges();
+			updateData();
 		}
 		document.addEventListener('DOMContentLoaded', ready, false);
-		var ws = new WebSocket("ws://192.168.4.22/ws");
-		ws.onopen = function () {
-		};
-		ws.onmessage = function (getVmin) {
-			document.getElementById("Vmin").innerHTML = getVmin.data;
-			console.log(getVmin.data);
-			console.log("message received");
-		};
 
-		setInterval(function () {
-			// Call a function repetatively with 2 Second interval
-			getData();
-		}, 2000);
-		function getData() {
+		function updateData() {
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function () {
 				if (this.readyState == 4 && this.status == 200) {
-					document.getElementById("ADCValue").innerHTML =
-						this.responseText;
+					var cellVoltageMin = parseFloat(this.responseText);
+					document.getElementById("Vmin").innerHTML = cellVoltageMin;
+					console.log(this.responseText);
+					console.log(cellVoltageMin);
+					console.log("");
 				}
 			};
-			xhttp.open("GET", "readADC", true);
+			xhttp.open("GET", "/vmin", true);
 			xhttp.send();
+
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					var cellVoltageMax = parseFloat(this.responseText);
+					document.getElementById("Vmax").innerHTML = cellVoltageMax;
+					console.log(this.responseText);
+					console.log(cellVoltageMax);
+					console.log("");
+				}
+			};
+			xhttp.open("GET", "/vmax", true);
+			xhttp.send();
+
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					var batteryVoltage = parseFloat(this.responseText);
+					document.getElementById("Vtot").innerHTML = batteryVoltage;
+					console.log(this.responseText);
+					console.log(batteryVoltage);
+					console.log("");
+				}
+			};
+			xhttp.open("GET", "/vtot", true);
+			xhttp.send();
+
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					var batteryCurrent = Math.abs(parseFloat(this.responseText))
+					document.getElementById("Ampere").innerHTML = batteryCurrent;
+					console.log(this.responseText);
+					console.log(batteryCurrent);
+					console.log("");
+				}
+			};
+			xhttp.open("GET", "/amps", true);
+			xhttp.send();
+
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					var batteryCapacity = parseFloat(this.responseText);
+					document.getElementById("SOC").innerHTML = batteryCapacity;
+					console.log(this.responseText);
+					console.log(batteryCapacity);
+					console.log("");
+				}
+			};
+			xhttp.open("GET", "/soc", true);
+			xhttp.send();
+
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					var batteryTemperature = parseFloat(this.responseText);
+					document.getElementById("Temperature").innerHTML = batteryTemperature;
+					console.log(this.responseText);
+					console.log(batteryTemperature);
+					console.log("");
+				}
+			};
+			xhttp.open("GET", "/temp", true);
+			xhttp.send();
+
+
+			batteryPercentage = (((100 / 70) * batteryCapacity) - (cellVoltageMax - cellVoltageMin)) * 50;
+			chargerPower = (batteryVoltage * batteryCurrent) / 1000;
+
+			socGauge.setValue(batteryCapacity);
+			speedGauge.setValue(chargerPower);
+
+			console.log("batteryCapacity:");
+			console.log(batteryPercentage);
+			console.log("chargerPower:");
+			console.log(chargerPower);
 		}
 
+		setInterval(function () {
+			updateData();
+		}, 5000);
 	</script>
 </head>
 
 <body class="body">
-
 	<div class="parent">
 		<div id="socElement" class="knob"> </div>
 		<div id="speedElement" class="knob"> </div>
@@ -140,15 +197,27 @@
 	<div class="parent">
 		<div class="knob">
 			<p class="textstyle">Vmin</p>
-			<span class="display" id="Vmin">--</span>
-		</div>
-		<div class="knob">
-			<p class="textstyle">Vavg</p>
-			<span class="display" id="Vavg"></span>
+			<span class="display" id="Vmin"></span>
 		</div>
 		<div class="knob">
 			<p class="textstyle">Vmax</p>
 			<span class="display" id="Vmax"></span>
+		</div>
+		<div class="knob">
+			<p class="textstyle">Vtot</p>
+			<span class="display" id="Vtot"></span>
+		</div>
+		<div class="knob">
+			<p class="textstyle">Ampere</p>
+			<span class="display" id="Ampere"></span>
+		</div>
+		<div class="knob">
+			<p class="textstyle">SOC</p>
+			<span class="display" id="SOC"></span>
+		</div>
+		<div class="knob">
+			<p class="textstyle">Temperature</p>
+			<span class="display" id="Temperature"></span>
 		</div>
 	</div>
 
@@ -159,7 +228,8 @@
 			Functions
 		</p>
 		<div>
-
+			<span class="button" id="datalog" onclick="window.location.href = '/datalog'">Datalog</span>
+			<span class="button" id="serialport" onclick="window.location.href = '/serialport'">Serial Port</span>
 		</div>
 	</div>
 
@@ -170,40 +240,8 @@
 		<div>
 			<span class="button" id="parameters" onclick="window.location.href = '/parameters'">Parameters</span>
 			<span class="button" id="upload" onclick="window.location.href = '/update'">Upload</span>
-			<span class="button" id="datalog" onclick="window.location.href = '/datalog'">Datalog</span>
 		</div>
 	</div>
-
-	<script>
-		function toggleCheckbox(element) {
-			var xhr = new XMLHttpRequest();
-			if (element.checked) { xhr.open("GET", "/update?state=1", true); }
-			else { xhr.open("GET", "/update?state=0", true); }
-			xhr.send();
-		}
-
-		setInterval(function () {
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function () {
-				if (this.readyState == 4 && this.status == 200) {
-					var inputChecked;
-					var outputStateM;
-					if (this.responseText == 1) {
-						inputChecked = true;
-						outputStateM = "On";
-					}
-					else {
-						inputChecked = false;
-						outputStateM = "Off";
-					}
-					document.getElementById("output").checked = inputChecked;
-					document.getElementById("outputState").innerHTML = outputStateM;
-				}
-			};
-			xhttp.open("GET", "/state", true);
-			xhttp.send();
-		}, 1000);
-	</script>
 </body>
 
 </html>
