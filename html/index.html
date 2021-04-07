@@ -26,8 +26,8 @@
 
 		function gauges() {
 			// Create knob element, 300 x 300 px in size.
-			socGauge = pureknob.createKnob(260, 260);
-			speedGauge = pureknob.createKnob(260, 260);
+			socGauge = pureknob.createKnob(250, 250);
+			speedGauge = pureknob.createKnob(250, 250);
 
 			// Set properties.
 			socGauge.setProperty('angleStart', -0.75 * Math.PI);
@@ -41,11 +41,11 @@
 			socGauge.setProperty('textScale', '0.8');
 			socGauge.setProperty('label', 'SOC');
 			socGauge.setProperty('readonly', 'true');
-			socGauge.setProperty('fnValueToString', function (value) {
+			/*socGauge.setProperty('fnValueToString', function (value) {
 				let string = value.toString();
 				result = string + ' %';
 				return result;
-			});
+			}); */
 
 			speedGauge.setProperty('angleStart', -0.75 * Math.PI);
 			speedGauge.setProperty('angleEnd', 0.75 * Math.PI);
@@ -59,11 +59,11 @@
 			speedGauge.setProperty('label', 'Power');
 			speedGauge.setProperty('needle', "true");
 			speedGauge.setProperty('readonly', 'true');
-			speedGauge.setProperty('fnValueToString', function (value) {
+			/*speedGauge.setProperty('fnValueToString', function (value) {
 				let string = value.toString();
 				result = string + ' kW';
 				return result;
-			});
+			}); */
 
 			socGauge.setValue(0);
 			speedGauge.setValue(0);

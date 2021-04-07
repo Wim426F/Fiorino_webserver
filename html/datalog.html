@@ -16,6 +16,11 @@
                 location.reload();
             }
         }
+
+        setInterval(function () {
+            document.getElementById("logfile").reload();
+        }, 60000);
+
     </script>
 </head>
 
@@ -27,37 +32,38 @@
         <div>
             <span class="button" id="delete" onclick="editlog(this)">Delete Logfile</span>
             <input class="button" type="button" id="download" value="Download Logfile" />
-
-            <script>
-                var dt = new Date();
-                var datetime = dt.toLocaleString();
-
-                // Download function
-                function download(filename, text) {
-                    var element = document.createElement('a');
-                    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-                    element.setAttribute('download', filename);
-
-                    element.style.display = 'none';
-                    document.body.appendChild(element);
-                    element.click();
-                    document.body.removeChild(element);
-                }
-
-                // Start file download.
-                document.getElementById("download").addEventListener("click", function () {
-                    // Generate download of hello.txt file with some content
-                    var text = document.getElementById("logfile").value;
-                    var filename = "logfile_" + datetime + ".csv";
-
-                    download(filename, text);
-                }, false);
-            </script>
         </div>
+        <script>
+            var dt = new Date();
+            var datetime = dt.toLocaleString();
+
+            // Download function
+            function download(filename, text) {
+                var element = document.createElement('a');
+                element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+                element.setAttribute('download', filename);
+
+                element.style.display = 'none';
+                document.body.appendChild(element);
+                element.click();
+                document.body.removeChild(element);
+            }
+
+            // Start file download.
+            document.getElementById("download").addEventListener("click", function () {
+                // Generate download of hello.txt file with some content
+                var text = document.getElementById("logfile").innerText;
+                var filename = "logfile_" + datetime + ".csv";
+
+                download(filename, text);
+            }, false);
+        </script>
     </div>
 
     <div class="parent">
-            <textarea id="logfile" class="textblock" data="logfile" name="Logfile"></textarea>
+        <div class="textblock">
+            <object id="logfile" class="logstyle" data="logfile" type="text/plain"></object>
+        </div>
     </div>
 
     <hr class="line">
