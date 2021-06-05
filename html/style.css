@@ -12,7 +12,8 @@
 }
 
 .child {
-	margin: 2%;
+	margin-left: 2%;
+	margin-right: 2%;
 	display: inline-block;
 }
 
@@ -47,14 +48,15 @@
 }
 
 .spacer {
-	height: 40px;
+	height: 30px;
 }
 
 .knob {
 	margin-left: auto;
-	margin-top: 20px;
 	margin-right: auto;
-	display: inline-table;
+	display: flex;
+	height: 50%!important;
+	width: 100%!important;
 }
 
 .knob2 {
@@ -63,17 +65,101 @@
 	display: inline-table;
 }
 
+.knob3 {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.chart {
+	width: 90%;
+	margin: auto;
+	padding-bottom: 2%;
+}
+
+.highcharts-figure, .highcharts-data-table {
+	min-width: 360px;
+	max-width: 800px;
+	max-height: 350px;
+	margin: 1em auto;
+}
+
+.value-picker {
+	background-color: #bdc3c7;
+	border-radius: 10px;
+	border: 2px solid #212121;
+	color: #212121;
+	font-family: Arial;
+	font-size: 17px;
+	width: 60px;
+	padding: 5px;
+	margin: 10px;
+}
+
+.value-picker:hover {
+	background-color: #ECF0F1;
+	border: 2px solid #95A5A6;
+}
+
 .textstyle {
 	font-family: Arial;
 	font-size: 17px;
 	color: #bdc3c7;
+	margin: 5px;
+	padding-top: 15px;
 }
 
 .titlestyle {
 	font-family: Arial;
 	font-size: 20px;
 	color: #2ecc71;
-	margin: 5px;
+	margin: 0px;
+	padding-top: 20px;
+}
+
+table {
+	font-family: Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 98%;
+	margin: 1%;
+	border: 3px solid #212121;
+}
+
+table td, table th {
+	padding: 10px;
+}
+
+table tr:nth-child(even) {
+	background-color: #2C3E50
+}
+
+table tr:nth-child(odd) {
+	background-color: #34495e
+}
+
+table th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #2ecc71;
+	color: #212121;
+}
+
+.param {
+	background-color: #bdc3c7;
+	border-radius: 10px;
+	border: 3px solid #212121;
+	color: #212121;
+	font-family: Arial;
+	font-size: 17px;
+	padding: 10px 31px;
+	text-decoration: none;
+	display: inline-block;
+	margin: 10px;
+}
+
+.param:hover {
+	background-color: #ECF0F1;
+	border: 3px solid #95A5A6;
 }
 
 .display {

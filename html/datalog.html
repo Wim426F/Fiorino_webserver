@@ -8,6 +8,8 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css" type="text/css">
     <script>
+        var logfileText = "";
+
         function editlog(element) {
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "/datalog?function=" + element.id, true);
@@ -37,10 +39,26 @@
             var dt = new Date();
             var datetime = dt.toLocaleString();
 
+            // read text from URL location
+            function getText() {
+                var request = new XMLHttpRequest();
+                request.open('GET', '/logfile', true);
+                request.send();
+                request.onreadystatechange = function () {
+                    if (request.readyState === 4 && request.status === 200) {
+                        var type = request.getResponseHeader('Content-Type');
+                        if (type.indexOf("text") !== 1) {
+                            logfileText = request.responseText;
+                            console.log(logfileText);
+                        }
+                    }
+                }
+            }
+
             // Download function
             function download(filename, text) {
                 var element = document.createElement('a');
-                element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+                element.setAttribute('href', 'data:text/plain;charset=utf-8,');
                 element.setAttribute('download', filename);
 
                 element.style.display = 'none';
@@ -49,13 +67,27 @@
                 document.body.removeChild(element);
             }
 
+            function downloadString(text, fileType, fileName) {
+                var blob = new Blob([text], { type: fileType });
+
+                var a = document.createElement('a');
+                a.download = fileName;
+                a.href = URL.createObjectURL(blob);
+                a.dataset.downloadurl = [fileType, a.download, a.href].join(':');
+                a.style.display = "none";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
+            }
+
             // Start file download.
             document.getElementById("download").addEventListener("click", function () {
-                // Generate download of hello.txt file with some content
-                var text = document.getElementById("logfile").innerText;
+                getText();
+                var text = logfileText;
                 var filename = "logfile_" + datetime + ".csv";
 
-                download(filename, text);
+                downloadString(logfileText, "text/csv", filename);
             }, false);
         </script>
     </div>
