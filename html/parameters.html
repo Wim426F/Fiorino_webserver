@@ -7,6 +7,26 @@
     </title>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"> 
     <link rel="stylesheet" href="style.css" type="text/css">
+    <script>
+        function updateData() {
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					cellVoltageMin = parseFloat(this.responseText);
+					//document.getElementById("Vmin").innerHTML = cellVoltageMin;
+					console.log(this.responseText);
+					console.log(cellVoltageMin);
+					console.log("");
+				}
+			};
+			xhttp.open("GET", "/params", true);
+			xhttp.send();
+		}
+
+		setInterval(function () {
+			updateData();
+		}, 5000);
+    </script>
 </head>
 
 <body class="body">
