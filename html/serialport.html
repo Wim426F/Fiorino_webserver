@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="style.css" type="text/css">
     <script>
 
+        setInterval(function () {
+            //document.getElementById("port");
+            document.getElementById("port").contentWindow.location.reload(true);
+        }, 1000);
     </script>
 </head>
 
@@ -23,7 +27,9 @@
     </div>
 
     <div class="parent">
-        <textarea id="port" class="textblock" data="" name="Serial port"></textarea>
+        <div class="textblock">
+            <object id="port" class="logstyle" data="serial" type="text/plain"></object>
+        </div>
     </div>
 
     <hr class="line">

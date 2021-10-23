@@ -15,6 +15,7 @@
 		var tempMin = 0;
 		var tempPref = 0;
 		var tempMax = 0;
+		var heatingSetpoint = 0;
 
 		function getData() {
 			var xhttp = new XMLHttpRequest();
@@ -28,6 +29,7 @@
 					tempMin = parseFloat(jsonResponse._5);
 					tempPref = parseFloat(jsonResponse._6);
 					tempMax = parseFloat(jsonResponse._7);
+					heatingSetpoint = parseFloat(jsonResponse._8);
 				}
 			};
 			xhttp.open("GET", "/params", true);
@@ -41,7 +43,7 @@
 			document.getElementById("tpmi").innerHTML = tempMin;
 			document.getElementById("tpp").innerHTML = tempPref;
 			document.getElementById("tpma").innerHTML = tempMax;
-
+			document.getElementById("ptc_sp").innerHTML = heatingSetpoint;
 			//console.log("ac amps: " + acAmps);
 			//console.log("");
 		}
@@ -91,6 +93,10 @@
 		<tr>
 			<td class="textstyle">Temperature Limit Maximum</td>
 			<td class="param" id="tpma"></td>
+		</tr>
+		<tr>
+			<td class="textstyle">Temperature Limit Maximum</td>
+			<td class="param" id="ptc_sp"></td>
 		</tr>
 	</table>
 	

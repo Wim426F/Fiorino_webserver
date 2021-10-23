@@ -30,6 +30,10 @@
 		var maxEvsePower = 11;
 		var acAmps = 0;
 
+		var heatingTemp = 0;
+		var heatingEn = "false";
+		var heatingSetpoint = 0;
+
 		var lastInterval = 0;
 		var chartInterval = 30; // seconds
 		var intervalId;
@@ -122,6 +126,9 @@
 					batteryCurrent = parseFloat(jsonResponse.amps);
 					batteryCapacity = parseFloat(jsonResponse.soc);
 					chargerPwm = parseFloat(jsonResponse.pwm);
+					heatingTemp = parseFloat(jsonResponse.ptc);
+					heatingEn = parseFloat(jsonResponse.ptc_en);
+					heatingSetpoint = parseFloat(jsonResponse.ptc_sp);
 				}
 			};
 			xhttp.open("GET", "/bms", true);
@@ -152,6 +159,9 @@
 			document.getElementById("SOC").innerHTML = batteryCapacity;
 			document.getElementById("Temperature").innerHTML = batteryTemperature;
 			document.getElementById("pwm").innerHTML = chargerPwm;
+			document.getElementById("ptc_temp").innerHTML = heatingTemp;
+			document.getElementById("ptc_en").innerHTML = heatingEn;
+			document.getElementById("ptc_sp").innerHTML = heatingSetpoint;
 
 			var fixedVal1 = batteryPercentage.toFixed(2); // cut off precision
 			var fixedVal2 = chargerPower.toFixed(2);
@@ -228,7 +238,7 @@
 
 			setInterval(function () {
 				getEvse();
-			}, 250);
+			}, 500);
 		}
 
 	</script>
@@ -316,6 +326,23 @@
 		<div class="knob2">
 			<p class="textstyle">Charger<br> PWM</p>
 			<span class="display" id="pwm"></span>
+		</div>
+	</div>
+
+	<div class="parent">
+		<div class="spacer"></div>
+		<p class="titlestyle">Battery Heating</p>
+		<div class="knob2">
+			<p class="textstyle">Heater<br> enabled</p>
+			<span class="display" id="ptc_en"></span>
+		</div>
+		<div class="knob2">
+			<p class="textstyle">Heater<br> temperature</p>
+			<span class="display" id="ptc_temp"></span>
+		</div>
+		<div class="knob2">
+			<p class="textstyle">Temperature<br> setpoint</p>
+			<span class="display" id="ptc_sp"></span>
 		</div>
 	</div>
 
