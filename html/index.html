@@ -33,6 +33,7 @@
 		var heatingTemp = 0;
 		var heatingEn = "false";
 		var heatingSetpoint = 0;
+		var heatingPwm = 0;
 
 		var lastInterval = 0;
 		var chartInterval = 30; // seconds
@@ -126,9 +127,12 @@
 					batteryCurrent = parseFloat(jsonResponse.amps);
 					batteryCapacity = parseFloat(jsonResponse.soc);
 					chargerPwm = parseFloat(jsonResponse.pwm);
+					balancedCapacity = parseFloat(jsonResponse.balc);
+					balancingPower = parseFloat(jsonResponse.balp);
 					heatingTemp = parseFloat(jsonResponse.ptc);
-					heatingEn = parseFloat(jsonResponse.ptc_en);
+					heatingEn = jsonResponse.ptc_en;
 					heatingSetpoint = parseFloat(jsonResponse.ptc_sp);
+					heatingPwm = parseFloat(jsonResponse.ptc_pwm);
 				}
 			};
 			xhttp.open("GET", "/bms", true);
@@ -159,9 +163,12 @@
 			document.getElementById("SOC").innerHTML = batteryCapacity;
 			document.getElementById("Temperature").innerHTML = batteryTemperature;
 			document.getElementById("pwm").innerHTML = chargerPwm;
+			document.getElementById("bal_c").innerHTML = balancedCapacity;
+			document.getElementById("bal_p").innerHTML = balancingPower;
 			document.getElementById("ptc_temp").innerHTML = heatingTemp;
 			document.getElementById("ptc_en").innerHTML = heatingEn;
 			document.getElementById("ptc_sp").innerHTML = heatingSetpoint;
+			document.getElementById("ptc_pwm").innerHTML = heatingPwm;
 
 			var fixedVal1 = batteryPercentage.toFixed(2); // cut off precision
 			var fixedVal2 = chargerPower.toFixed(2);
@@ -306,6 +313,14 @@
 			<p class="textstyle">Temperature</p>
 			<span class="display" id="Temperature"></span>
 		</div>
+		<div class="knob2">
+			<p class="textstyle">Balancing<br> Power</p>
+			<span class="display" id="bal_p"></span>
+		</div>
+		<div class="knob2">
+			<p class="textstyle">Balanced<br> Capacity</p>
+			<span class="display" id="bal_c"></span>
+		</div>
 	</div>
 
 	<div class="parent">
@@ -343,6 +358,10 @@
 		<div class="knob2">
 			<p class="textstyle">Temperature<br> setpoint</p>
 			<span class="display" id="ptc_sp"></span>
+		</div>
+		<div class="knob2">
+			<p class="textstyle">PWM</p>
+			<span class="display" id="ptc_pwm"></span>
 		</div>
 	</div>
 
