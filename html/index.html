@@ -126,6 +126,8 @@
 					batteryCurrent = parseFloat(jsonResponse.amps);
 					batteryCapacity = parseFloat(jsonResponse.soc);
 					chargerPwm = parseFloat(jsonResponse.pwm);
+					balancedCapacity = parseFloat(jsonResponse.balc);
+					balancingPower = parseFloat(jsonResponse.balp);
 					heatingTemp = parseFloat(jsonResponse.ptc);
 					heatingEn = parseFloat(jsonResponse.ptc_en);
 					heatingSetpoint = parseFloat(jsonResponse.ptc_sp);
@@ -159,6 +161,8 @@
 			document.getElementById("SOC").innerHTML = batteryCapacity;
 			document.getElementById("Temperature").innerHTML = batteryTemperature;
 			document.getElementById("pwm").innerHTML = chargerPwm;
+			document.getElementById("bal_c").innerHTML = balancedCapacity;
+			document.getElementById("bal_p").innerHTML = balancingPower;
 			document.getElementById("ptc_temp").innerHTML = heatingTemp;
 			document.getElementById("ptc_en").innerHTML = heatingEn;
 			document.getElementById("ptc_sp").innerHTML = heatingSetpoint;
@@ -305,6 +309,14 @@
 		<div class="knob2">
 			<p class="textstyle">Temperature</p>
 			<span class="display" id="Temperature"></span>
+		</div>
+		<div class="knob2">
+			<p class="textstyle">Balancing<br> Power</p>
+			<span class="display" id="bal_p"></span>
+		</div>
+		<div class="knob2">
+			<p class="textstyle">Balanced<br> Capacity</p>
+			<span class="display" id="bal_c"></span>
 		</div>
 	</div>
 
