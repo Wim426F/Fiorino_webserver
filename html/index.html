@@ -14,7 +14,8 @@
 		var batteryPercentage = 0;
 		var batteryVoltage = 0;
 		var batteryCurrent = 0;
-		var batteryTemperature = 0;
+		var batteryTemperatureFront = 0;
+		var batteryTemperatureRear = 0;
 
 		var cellVoltageMin = 0;
 		var cellVoltageMax = 0;
@@ -123,7 +124,8 @@
 					batteryVoltage = parseFloat(jsonResponse.vtot);
 					cellVoltageMax = parseFloat(jsonResponse.vmax);
 					cellVoltageMin = parseFloat(jsonResponse.vmin);
-					batteryTemperature = parseFloat(jsonResponse.temp);
+					batteryTemperatureFront = parseFloat(jsonResponse.temp);
+					batteryTemperatureRear = parseFloat(jsonResponse.temp_r);
 					batteryCurrent = parseFloat(jsonResponse.amps);
 					batteryCapacity = parseFloat(jsonResponse.soc);
 					chargerPwm = parseFloat(jsonResponse.pwm);
@@ -161,7 +163,8 @@
 			document.getElementById("Vtot").innerHTML = batteryVoltage;
 			document.getElementById("Ampere").innerHTML = batteryCurrent;
 			document.getElementById("SOC").innerHTML = batteryCapacity;
-			document.getElementById("Temperature").innerHTML = batteryTemperature;
+			document.getElementById("temp_front").innerHTML = batteryTemperatureFront;
+			document.getElementById("temp_rear").innerHTML = batteryTemperatureRear;
 			document.getElementById("pwm").innerHTML = chargerPwm;
 			document.getElementById("bal_c").innerHTML = balancedCapacity;
 			document.getElementById("bal_p").innerHTML = balancingPower;
@@ -310,8 +313,12 @@
 			<span class="display" id="SOC"></span>
 		</div>
 		<div class="knob2">
-			<p class="textstyle">Temperature</p>
-			<span class="display" id="Temperature"></span>
+			<p class="textstyle">Temperature<br> Front</p>
+			<span class="display" id="temp_front"></span>
+		</div>
+		<div class="knob2">
+			<p class="textstyle">Temperature<br> Rear</p>
+			<span class="display" id="temp_rear"></span>
 		</div>
 		<div class="knob2">
 			<p class="textstyle">Balancing<br> Power</p>
